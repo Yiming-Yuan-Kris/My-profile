@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="个人介绍网页模板 - 展示个人技能、项目与联系信息">
+    <title>个人简介 | 创意开发者</title>
+    <!-- Google Fonts & Font Awesome 6 (免费图标库) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* 全局容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* 导航栏 (sticky 毛玻璃效果) */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 1rem 0;
+            transition: all 0.2s ease;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #1e293b;
+            transition: color 0.2s;
+            font-size: 1rem;
+        }
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+        /* 移动端导航优化 */
+        @media (max-width: 700px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .nav-links {
+                gap: 1.5rem;
+                justify-content: center;
+            }
+        }
+
+        /* 通用区块样式 */
+        section {
+            padding: 5rem 0;
+            scroll-margin-top: 80px;
+        }
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0f172a, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .section-sub {
+            text-align: center;
+            color: #475569;
+            max-width: 700px;
+            margin: -1rem auto 2rem;
+        }
+
+        /* Hero 区域 */
+        .hero {
+            padding: 4rem 0 3rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+        }
+        .hero-content {
+            flex: 1;
+            min-width: 260px;
+        }
+        .hero-content .badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.02em;
+        }
+        .hero-highlight {
+            color: #3b82f6;
+        }
+        .hero-content .title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #334155;
+            margin-bottom: 1rem;
+        }
+        .hero-desc {
+            color: #475569;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            font-size: 1.05rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.75rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 8px rgba(59,130,246,0.2);
+        }
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59,130,246,0.3);
+        }
+        .btn-outline {
+            border: 1.5px solid #cbd5e1;
+            color: #1e293b;
+        }
+        .btn-outline:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: translateY(-2px);
+        }
+        .hero-avatar {
+            flex: 0.8;
+            min-width: 240px;
+            display: flex;
+            justify-content: center;
+        }
+        .avatar-circle {
+            background: linear-gradient(145deg, #eef2ff, #e0e7ff);
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .avatar-circle i {
+            font-size: 9rem;
+            color: #3b82f6;
+            filter: drop-shadow(2px 6px 8px rgba(0,0,0,0.05));
+        }
+        .avatar-circle:hover {
+            transform: scale(1.02);
+        }
+        @media (max-width: 800px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            .hero-content {
+                text-align: center;
+            }
+            .hero-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .btn-group {
+                justify-content: center;
+            }
+            .avatar-circle {
+                width: 200px;
+                height: 200px;
+            }
+            .avatar-circle i {
+                font-size: 6.5rem;
+            }
+        }
+
+        /* 关于区域 */
+        .about-grid {
+            display: flex;
+            gap: 2rem;
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02), 0 2px 6px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+        }
+        .about-text {
+            flex: 2;
+        }
+        .about-text p {
+            margin-bottom: 1rem;
+            color: #334155;
+            font-size: 1.02rem;
+        }
+        .info-list {
+            flex: 1;
+            background: #f1f5f9;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+        }
+        .info-list h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .info-list li {
+            list-style: none;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: #0f172a;
+        }
+        .info-list i {
+            width: 28px;
+            color: #3b82f6;
+            font-size: 1.2rem;
+        }
+
+        /* 技能卡片 + 进度条 */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .skill-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            transition: all 0.25s;
+            border: 1px solid #eef2ff;
+        }
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -12px rgba(0,0,0,0.08);
+            border-color: #cbdffc;
+        }
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .skill-name {
+            font-size: 1rem;
+        }
+        .skill-percent {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .progress-bar {
+            background-color: #e2e8f0;
+            border-radius: 40px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            width: 0%;
+            height: 100%;
+            border-radius: 40px;
+        }
+
+        /* 项目卡片 */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .project-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+            border: 1px solid #eef2ff;
+        }
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+            border-color: #bfdbfe;
+        }
+        .project-img {
+            height: 160px;
+            background: linear-gradient(135deg, #d9e6ff, #c7dafe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #3b82f6;
+        }
+        .project-info {
+            padding: 1.5rem;
+        }
+        .project-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .tag {
+            background: #eef2ff;
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #2563eb;
+        }
+        .project-info p {
+            color: #475569;
+            font-size: 0.9rem;
+        }
+
+        /* 联系区域布局 */
+        .contact-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.03);
+        }
+        .contact-social {
+            flex: 1;
+        }
+        .contact-social h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        .contact-details {
+            margin: 2rem 0 1.5rem;
+        }
+        .contact-details p {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        .social-icons a {
+            background: #f1f5f9;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            font-size: 1.3rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .social-icons a:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-3px);
+        }
+        .contact-form {
+            flex: 1;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 1rem;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            background: #fefefe;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+        .form-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.9rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .form-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 1rem;
+            color: #5b6e8c;
+            font-size: 0.85rem;
+        }
+        @media (max-width: 760px) {
+            .contact-wrapper {
+                flex-direction: column;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        /* 平滑滚动的偏移补充 */
+        html {
+            scroll-padding-top: 85px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+    <div class="container nav-container">
+        <div class="logo"><i class="fas fa-code"></i> Alex.dev</div>
+        <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#about">关于</a></li>
+            <li><a href="#skills">技能</a></li>
+            <li><a href="#projects">项目</a></li>
+            <li><a href="#contact">联系</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <!-- Hero 区域 (home) -->
+    <section id="home">
+        <div class="container hero">
+            <div class="hero-content">
+                <span class="badge"><i class="fas fa-sparkles"></i> 拥抱创新</span>
+                <h1>你好, 我是<br><span class="hero-highlight">袁一鸣</span></h1>
+                <div class="title">全栈开发 & 创意设计师</div>
+                <p class="hero-desc">
+                    热衷于构建优雅、高性能的Web应用。4年+ 经验，乐于将想法转化为流畅的数字体验。
+                </p>
+                <div class="btn-group">
+                    <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> 联系我</a>
+                    <a href="#" class="btn btn-outline" id="resumeBtn"><i class="fas fa-download"></i> 下载简历</a>
+                </div>
+            </div>
+            <div class="hero-avatar">
+                <div class="avatar-circle">
+                    <i class="fas fa-user-astronaut"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于区域 -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>我是一名富有创造力的全栈开发者，拥有计算机工程学士学位，现居长沙。在过去4年中，我与多家初创公司及设计团队合作，交付了超过15个响应式网站与平台。我相信代码不仅实现功能，更塑造情感联系。</p>
+                    <p>除了编码，我热爱摄影与开源社区贡献。目前专注于 React 生态与 Node.js 后端架构，并在探索 AI 辅助开发工具。我坚信持续学习与团队协作能创造出远超预期的产品。</p>
+                    <p><i class="fas fa-quote-left" style="color:#3b82f6; margin-right: 6px;"></i> 设计细腻 + 代码优雅 = 卓越用户体验</p>
+                </div>
+                <div class="info-list">
+                    <h3><i class="fas fa-id-card"></i> 基本信息</h3>
+                    <ul>
+                        <li><i class="fas fa-user"></i> 袁一鸣 / Kris Yuan</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 中国 · 长沙</li>
+                        <li><i class="fas fa-envelope"></i> yyuan24@alberta.ca</li>
+                        <li><i class="fas fa-graduation-cap"></i> 阿尔伯塔大学 (计算机工程)</li>
+                        <li><i class="fas fa-globe"></i> 英语 · 普通话 (母语)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专业技能 + 进度条 -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">技术栈与掌握度</h2>
+            <p class="section-sub">持续迭代，热爱钻研前沿工具</p>
+            <div class="skills-container">
+                <!-- 技能卡片 1 -->
+                <div class="skill-card">
+                    <div class="skill-header"><span class="skill-name">HTML5 & CSS3</span><span class="skill-percent">92%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div>
+                    <div class="skill-header" style="margin-top: 1rem;"><span class="skill-name">JavaScript / TypeScript</span><span class="skill-percent">88%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div>
+                    <div class="skill-header" style="margin-top: 1rem;"><span class="skill-name">React & Next.js</span><span class="skill-percent">85%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header"><span class="skill-name">Node.js / Express</span><span class="skill-percent">80%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+                    <div class="skill-header" style="margin-top: 1rem;"><span class="skill-name">Python / Flask</span><span class="skill-percent">75%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+                    <div class="skill-header" style="margin-top: 1rem;"><span class="skill-name">UI/UX 设计 (Figma)</span><span class="skill-percent">78%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:78%"></div></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header"><span class="skill-name">数据库 (SQL/MongoDB)</span><span class="skill-percent">82%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:82%"></div></div>
+                    <div class="skill-header" style="margin-top: 1rem;"><span class="skill-name">Git & 协作工具</span><span class="skill-percent">90%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+                    <div class="skill-header" style="margin-top: 1rem;"><span class="skill-name">Tailwind / 响应式</span><span class="skill-percent">89%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:89%"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目展示 -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">精选项目</h2>
+            <p class="section-sub">从概念到落地，每一个细节都用心打磨</p>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img"><i class="fas fa-cloud-sun fa-4x"></i></div>
+                    <div class="project-info">
+                        <h3>WeatherViz 仪表板</h3>
+                        <div class="project-tags"><span class="tag">React</span><span class="tag">Chart.js</span><span class="tag">API</span></div>
+                        <p>实时天气可视化平台，支持多城市监测、动态图表与智能提醒，月活用户达2k+。</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img"><i class="fas fa-store fa-4x"></i></div>
+                    <div class="project-info">
+                        <h3>EcoMart 电商前端</h3>
+                        <div class="project-tags"><span class="tag">Vue3</span><span class="tag">Pinia</span><span class="tag">Tailwind</span></div>
+                        <p>可持续产品电商站点，实现购物车、高性能SSR和无障碍设计，转化率提升24%。</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img"><i class="fas fa-tasks fa-4x"></i></div>
+                    <div class="project-info">
+                        <h3>FlowTask 协作工具</h3>
+                        <div class="project-tags"><span class="tag">Node.js</span><span class="tag">Socket.io</span><span class="tag">MongoDB</span></div>
+                        <p>实时任务管理看板，团队协作、评论通知，已服务超10个远程团队。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系区域 + 表单 -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">保持联系</h2>
+            <div class="contact-wrapper">
+                <div class="contact-social">
+                    <h3>一起创造精彩</h3>
+                    <p>不论项目合作还是技术交流，我都乐于倾听。</p>
+                    <div class="contact-details">
+                        <p><i class="fas fa-phone-alt"></i> +86 181 7387 9630</p>
+                        <p><i class="fas fa-envelope"></i> yyuan24@alberta.ca</p>
+                        <p><i class="fab fa-weixin"></i> YuanymSerendipity</p>
+                    </div>
+                    <div class="social-icons">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="demoForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="你的姓名 *" id="nameInput" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="电子邮箱 *" id="emailInput" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea rows="4" placeholder="想要说的话..." id="msgInput"></textarea>
+                        </div>
+                        <button type="submit" class="form-btn"><i class="fas fa-paper-plane"></i> 发送消息</button>
+                    </form>
+                    <p style="font-size: 0.75rem; color:#6b7280; margin-top: 1rem;">* 演示表单，提交仅展示提示信息</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2025 袁一鸣 | 设计源自灵感，代码构建未来</p>
+        <p style="margin-top: 0.5rem;"><i class="fas fa-heart" style="color:#ef4444;"></i> 开放合作 · 持续成长</p>
+    </div>
+</footer>
+
+<!-- 少量JS交互：演示表单模拟提示 & 简历按钮演示 -->
+<script>
+    (function() {
+        // 模拟简历下载提醒
+        const resumeBtn = document.getElementById('resumeBtn');
+        if(resumeBtn) {
+            resumeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('📄 简历功能示例: 可替换为实际PDF链接。\n(这里只是模板演示)');
+            });
+        }
+
+        // 联系表单模拟提交（仅前端示意，无后端）
+        const contactForm = document.getElementById('demoForm');
+        if(contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('nameInput')?.value.trim();
+                const email = document.getElementById('emailInput')?.value.trim();
+                const msg = document.getElementById('msgInput')?.value.trim();
+                if(!name || !email) {
+                    alert('请填写姓名和邮箱，以便联系您 ✉️');
+                    return;
+                }
+                if(!email.includes('@')) {
+                    alert('请输入有效的邮箱地址');
+                    return;
+                }
+                alert(`✨ ${name}，感谢你的留言！我会尽快回复你。\n(演示模式，未实际发送)`);
+                contactForm.reset();  // 清空表单
+            });
+        }
+
+        // 平滑滚动增强 (导航自带scroll-behavior，但以防极少数浏览器，同时确保所有内部锚点)
+        document.querySelectorAll('.nav-links a, .btn-primary[href="#contact"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if(targetId && targetId.startsWith('#')) {
+                    const targetElem = document.querySelector(targetId);
+                    if(targetElem) {
+                        e.preventDefault();
+                        targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+    })();
+</script>
+</body>
+</html>
